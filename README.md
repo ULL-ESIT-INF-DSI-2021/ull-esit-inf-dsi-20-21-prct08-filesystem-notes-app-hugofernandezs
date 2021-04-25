@@ -1,6 +1,6 @@
 # **PRÁCTICA 8 - Aplicación de procesamiento de notas de texto**
 
-
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-hugofernandezs/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-hugofernandezs?branch=main)
 
 ## **OBJETIVO DE LA PRÁCTICA**
 El objetivo de la práctica consiste en realizar una serie de problemas propuestos y resolverlos usando TypeScript y las funcionalidades de Node.js para familiarizarnos con el lenguaje y su funcionamiento.
