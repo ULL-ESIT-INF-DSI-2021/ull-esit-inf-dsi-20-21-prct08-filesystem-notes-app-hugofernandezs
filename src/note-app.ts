@@ -122,8 +122,8 @@ yargs.command({
           }
         });
         if (body === "") {
-          console.log(chalk.red(`El usuario ${argv.user} no tiene ninguna nota
-              con ese título`));
+          console.log(chalk.red(`El usuario ${argv.user} no tiene ninguna` +
+              `nota con ese título`));
         } else {
           console.log(body);
         }
@@ -150,8 +150,8 @@ yargs.command({
   handler(argv) {
     if ((typeof argv.user === 'string') && (typeof argv.title === 'string')) {
       if (fm.removeNote(argv.user, argv.title) === undefined) {
-        console.log(chalk.red(`No se encuentra ${argv.title} en
-            ${argv.user}.json.`));
+        console.log(chalk.red(`No se encuentra ${argv.title} en ` +
+            `${argv.user}.json.`));
       } else {
         console.log(chalk.green(`Nota eliminada con éxito.`));
       }
