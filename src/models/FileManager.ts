@@ -42,7 +42,7 @@ export class FileManager {
    * @param user User to look for.
    * @returns True if the file is found. False if not.
    */
-  public existsUserFile(user: string): boolean {
+  private existsUserFile(user: string): boolean {
     if (this.fs_.existsSync(`${this.folderPath_}/${user}.json`)) {
       return true;
     } else {
