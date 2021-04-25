@@ -1,11 +1,5 @@
-import * as chalk from 'chalk';
-
-export const enum color {
-  red = "Red",
-  yellow = "Yellow",
-  green = "Green",
-  blue = "Blue",
-};
+import chalk from 'chalk';
+import {Color, Note} from './Note';
 
 
 /**
@@ -50,7 +44,6 @@ export class FileManager {
    */
   public existsUserFile(user: string): boolean {
     if (this.fs_.existsSync(`${this.folderPath_}/${user}.json`)) {
-      console.log("File exists");
       return true;
     } else {
       return false;
@@ -68,21 +61,20 @@ export class FileManager {
     if (!this.existsUserFile(user)) {
       return undefined;
     } else {
-      const file: string = `${this.folderPath_}/${user}.json`;
-      console.log(`Checking ${this.folderPath_}/${user}.json file...`);
-      const userNotes: any[] = JSON.parse(this.fs_.readFileSync(file)).notes;
-      userNotes.forEach((note) => {
+      const userNotes: Note[] = JSON.parse(this.fs_.readFileSync(
+          `${this.folderPath_}/${user}.json`)).notes;
+      userNotes.forEach((note: Note) => {
         switch (note.color) {
-          case color.blue:
+          case Color.blue:
             notesList.push(chalk.blue(note.title));
             break;
-          case color.red:
+          case Color.red:
             notesList.push(chalk.red(note.title));
             break;
-          case color.yellow:
+          case Color.yellow:
             notesList.push(chalk.yellow(note.title));
             break;
-          case color.green:
+          case Color.green:
             notesList.push(chalk.green(note.title));
             break;
           default:
