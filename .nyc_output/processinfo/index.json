@@ -1,0 +1,1 @@
+{"processes":{"561c1ae8-e152-4d1b-8987-7d3246025ca4":{"parent":null,"children":["6dea097a-7893-42f0-b9d9-8c1175e658ab"]},"6dea097a-7893-42f0-b9d9-8c1175e658ab":{"parent":"561c1ae8-e152-4d1b-8987-7d3246025ca4","children":[]}},"files":{"/mnt/d/Home/Universidad/DSI/Pract8/src/models/FileManager.ts":["6dea097a-7893-42f0-b9d9-8c1175e658ab"]},"externalIds":{}}

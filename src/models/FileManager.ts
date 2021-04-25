@@ -56,41 +56,45 @@ export class FileManager {
    * @param user User to find the notes.
    * @returns A list with all the names of the notes.
    */
-  public getUserNotes(user: string): string[] | undefined {
-    const notesList: string[] = [];
+  public getUserNotes(user: string): Note[] | undefined {
     if (!this.existsUserFile(user)) {
       return undefined;
     } else {
-      const userNotes: Note[] = JSON.parse(this.fs_.readFileSync(
-          `${this.folderPath_}/${user}.json`)).notes;
-      userNotes.forEach((note: Note) => {
-        switch (note.color) {
-          case Color.blue:
-            notesList.push(chalk.blue(note.title));
-            break;
-          case Color.red:
-            notesList.push(chalk.red(note.title));
-            break;
-          case Color.yellow:
-            notesList.push(chalk.yellow(note.title));
-            break;
-          case Color.green:
-            notesList.push(chalk.green(note.title));
-            break;
-          default:
-            notesList.push(note.title);
-            break;
-        }
-      });
+      const data: any = JSON.parse(this.fs_.readFileSync(
+          `${this.folderPath_}/${user}.json`));
+      if (data.user != user) {
+        return undefined;
+      }
+      return data.notes;
     }
+  }
+
+
+  public getNotesTitle(user: string): string[] | undefined {
+    const notesList: string[] = [];
+    const userNotes: Note[] | undefined = this.getUserNotes(user);
+    if (typeof userNotes === 'undefined') {
+      return undefined;
+    }
+    userNotes.forEach((note: Note) => {
+      switch (note.color) {
+        case Color.blue:
+          notesList.push(chalk.blue(note.title));
+          break;
+        case Color.red:
+          notesList.push(chalk.red(note.title));
+          break;
+        case Color.yellow:
+          notesList.push(chalk.yellow(note.title));
+          break;
+        case Color.green:
+          notesList.push(chalk.green(note.title));
+          break;
+        default:
+          notesList.push(note.title);
+          break;
+      }
+    });
     return notesList;
   }
-}
-
-const fm: FileManager = FileManager.instance;
-const userNotes: string[] | undefined = fm.getUserNotes('hugo');
-if (!(typeof userNotes === 'undefined')) {
-  userNotes.forEach((note) => {
-    console.log(note);
-  });
 }
