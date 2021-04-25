@@ -11,6 +11,7 @@ const notesTitles: string[] = [chalk.red("Nota1"), chalk.blue("Nota2")];
 const newNote: Note = new Note("nuevaNota", Color.green, "Nuevo cuerpo");
 const note1: Note = new Note("Nota1", Color.red, "Cuerpo 1");
 const note2: Note = new Note("Nota2", Color.blue, "Cuerpo2");
+const note3: Note = new Note("Nota3", Color.yellow, "Cuerpo3");
 const userNotes: Note[] = [note1, note2];
 
 
@@ -29,6 +30,9 @@ describe('Funcionamiento básico de la clase FileManager.',
       it('Se pueden eliminar una nota.', () => {
         fm.addNote(user, newNote);
         expect(fm.removeNote(user, newNote)).to.deep.equal(userNotes);
+      });
+      it('Se pueden editar una nota.', () => {
+        expect(fm.editeNote(user, note2, note3)).to.deep.equal([note1, note3]);
       });
       it('Se pueden eliminar un usuario.', () => {
         expect(fm.removeUser(user)).to.deep.equal(true);

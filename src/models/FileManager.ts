@@ -105,7 +105,8 @@ export class FileManager {
    * Adds a note to the user file.
    * @param user User to add the note.
    * @param note Note to be added.
-   * @returns True if the note is added. False is something goes wrong.
+   * @returns Array of end notes if the note is added.
+   * Undefined is something goes wrong.
    */
   public addNote(user: string, note: Note): Note[] | undefined {
     const allNotes: Note[] | undefined = this.getUserNotes(user);
@@ -135,7 +136,8 @@ export class FileManager {
    * Removes a note from the user file.
    * @param user User to remove from the note.
    * @param note Note to be removed.
-   * @returns True if the note is removed. False is something goes wrong.
+   * @returns Array of end notes if the note is removed.
+   * Undefined is something goes wrong.
    */
   public removeNote(user: string, note: Note): Note[] | undefined {
     const allNotes: Note[] | undefined = this.getUserNotes(user);
@@ -165,6 +167,47 @@ export class FileManager {
     data = this.noteJsonFormat(data);
     this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
     console.log(chalk.green("Nota eliminada con éxito."));
+    return this.getUserNotes(user);
+  }
+
+
+  /**
+   * Edits a note from the user file.
+   * @param user User to edit from the note.
+   * @param oldNote Note to be edited.
+   * @param editedNote New edited note.
+   * @returns Array of end notes if the note is edited.
+   * Undefined is something goes wrong.
+   */
+  public editeNote(user: string, oldNote: Note, editedNote: Note):
+      Note[] | undefined {
+    const allNotes: Note[] | undefined = this.getUserNotes(user);
+    let data: string = `{\n\t"notes": [\n\t\t`;
+    if (typeof allNotes === 'undefined') {
+      this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, '');
+      console.log(chalk.red(`Error en el formato del archivo ${user}.json.`));
+      return undefined;
+    }
+    let index: number = -1;
+    allNotes.forEach((arrNote) => {
+      if (arrNote.title === oldNote.title) {
+        index = allNotes.indexOf(arrNote);
+      }
+    });
+    if (index === -1) {
+      console.log(chalk.red(`No se encuentra la nota en ${user}.json.`));
+      return undefined;
+    }
+    allNotes[index] = editedNote;
+    allNotes.forEach((arrNote) => {
+      const jsonFormat: string = JSON.stringify(arrNote);
+      data += `${jsonFormat},\n\t\t`;
+    });
+    data = data.substring(0, data.length - 4);
+    data += `\n\t]\n}`;
+    data = this.noteJsonFormat(data);
+    this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
+    console.log(chalk.green("Nota editada con éxito."));
     return this.getUserNotes(user);
   }
 
