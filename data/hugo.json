@@ -1,7 +1,14 @@
 {
 	"notes": [
-		{"title":"Nota1","color":"Red","body":"Cuerpo de la nota 1."},
-		{"title":"Nota2","color":"Blue","body":"Cuerpo de la nota 2."},
-		{"title":"nuevaNota","color":"Green","body":"Nuevo cuerpo"}
+		{
+			"title":"Nota1",
+			"color":"Red",
+			"body":"Cuerpo de la nota 1."
+		},
+		{
+			"title":"Nota2",
+			"color":"Blue",
+			"body":"Cuerpo de la nota 2."
+		}
 	]
 }

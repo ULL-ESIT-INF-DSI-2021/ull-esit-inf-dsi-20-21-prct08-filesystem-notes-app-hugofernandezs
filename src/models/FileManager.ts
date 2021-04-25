@@ -118,7 +118,17 @@ export class FileManager {
     });
     const jsonFormat: string = JSON.stringify(note);
     data += `${jsonFormat}\n\t]\n}`;
+    data = this.noteJsonFormat(data);
     this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
     return this.getUserNotes(user);
+  }
+
+  private noteJsonFormat(data: string): string {
+    let aux: string = data;
+    aux = aux.replace(/,/g, ",\n\t\t\t");
+    aux = aux.replace(/{"/g, "{\n\t\t\t\"");
+    aux = aux.replace(/"}/g, "\"\n\t\t}");
+    aux = aux.replace(/},\n\t\t\t\n/g, "},\n");
+    return aux;
   }
 }
