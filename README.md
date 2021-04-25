@@ -278,3 +278,43 @@ export class Note {
 ```
 
 Es una clase muy sencilla cuya única finalidad es la de ordenar la clase nota y hacer más fácil el trabajo, pues no implementa ninguna función especial.
+
+
+### **note-app**
+
+Es el programa principal. Sun funcionamiento es sencillo, el usuario deberá introducir lo deseado en la linea de comandos y el programa ejecutará la solicitud y finalizará. EL proceso se puede describir en lo siguientes pasos:
+1. Utiliza el paquete yargs para procesar la linea de comandos. Implementa las funcionalidades de añadir, eliminar, ver, listar y editar notas.
+2. Cada comando requiere una serie de argumentos que serán utilizados para realizar la operación solicitada.
+3. Utiliza la clase **FileManager** para cumplir las solicitudes del usuario.
+4. Muestra mensajes descriptivos del funcionamiento de la aplicación utilizando el paquete chalk para marcar rojos los errores y en verde las ejecuciones correctas.
+5. Finaliza el programa.
+
+
+
+### **Formato JSON**
+
+El formato JSON es una manera de almacenar objetos en archivos de texto de manera que se pueda trabajar con ellos posteriormente de manera sencilla. Para las notas hemos creado el siguiente ejemplo:
+
+```json
+{
+	"notes": [
+		{
+			"title":"Nota1",
+			"color":"Red",
+			"body":"Cuerpo de la nota 1."
+		},
+		{
+			"title":"Nota2",
+			"color":"Blue",
+			"body":"Cuerpo de la nota 2."
+		}
+	]
+}
+```
+
+Donde se almacena un vector de notas. Se puede distinguir claramente cada nota y los campos de la misma. Así como modificarla desde el propio fichero de manera sencilla si es necesario. Además permite pasar los datos a un objeto de manera sencilla para posteriormente trabajar con ellos en el programa como objetos de javascript.
+
+
+## **Conclusión**
+
+Node.js nos proporciona una manera eficaz y sencilla de trabajar con ficheros. SI añadimos esto a los paquetes de chalk y yargs descubrimos un montón de posibilidades a la hora de trabajar con los archivos y la linea de comandos. Además el formato JSON nos proporciona una forma sencilla de almacenar nuestros objetos y exportarlos rápidamente.
