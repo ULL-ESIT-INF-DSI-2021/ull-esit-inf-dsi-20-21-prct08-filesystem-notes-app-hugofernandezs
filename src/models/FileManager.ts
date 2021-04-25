@@ -54,7 +54,7 @@ export class FileManager {
   /**
    * Returns all the notes from the user.
    * @param user User to find the notes.
-   * @returns A list with all the names of the notes.
+   * @returns A list with all the notes.
    */
   public getUserNotes(user: string): Note[] | undefined {
     if (!this.existsUserFile(user)) {
@@ -62,14 +62,16 @@ export class FileManager {
     } else {
       const data: any = JSON.parse(this.fs_.readFileSync(
           `${this.folderPath_}/${user}.json`));
-      if (data.user != user) {
-        return undefined;
-      }
       return data.notes;
     }
   }
 
 
+  /**
+   * Returns all the note titles of an user.
+   * @param user User to find the notes titles.
+   * @returns A list with all the titles of the notes.
+   */
   public getNotesTitle(user: string): string[] | undefined {
     const notesList: string[] = [];
     const userNotes: Note[] | undefined = this.getUserNotes(user);
@@ -96,5 +98,27 @@ export class FileManager {
       }
     });
     return notesList;
+  }
+
+  /**
+   * Adds a note to a user file.
+   * @param user User to add the note.
+   * @param note Note to be added.
+   * @returns True if the note is added. False is something goes wrong.
+   */
+  public addNote(user: string, note: Note): Note[] | undefined {
+    const allNotes: Note[] | undefined = this.getUserNotes(user);
+    if (typeof allNotes === 'undefined') {
+      return undefined;
+    }
+    let data: string = `{\n\t"notes": [\n\t\t`;
+    allNotes.forEach((arrNote) => {
+      const jsonFormat: string = JSON.stringify(arrNote);
+      data += `${jsonFormat},\n\t\t`;
+    });
+    const jsonFormat: string = JSON.stringify(note);
+    data += `${jsonFormat}\n\t]\n}`;
+    this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
+    return this.getUserNotes(user);
   }
 }
