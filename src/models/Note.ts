@@ -1,10 +1,11 @@
 
 
-export const enum Color {
+export enum Color {
   red = "Red",
   yellow = "Yellow",
   green = "Green",
   blue = "Blue",
+  white = "White",
 };
 
 

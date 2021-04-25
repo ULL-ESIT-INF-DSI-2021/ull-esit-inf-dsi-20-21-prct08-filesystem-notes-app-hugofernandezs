@@ -92,6 +92,9 @@ export class FileManager {
         case Color.green:
           notesList.push(chalk.green(note.title));
           break;
+        case Color.white:
+          notesList.push(chalk.white(note.title));
+          break;
         default:
           notesList.push(note.title);
           break;
@@ -116,7 +119,6 @@ export class FileManager {
     } else {
       allNotes.forEach((arrNote) => {
         if (arrNote.title === note.title) {
-          console.log(chalk.red("Ya existe una nota con ese título."));
           return undefined;
         }
         const jsonFormat: string = JSON.stringify(arrNote);
@@ -127,7 +129,6 @@ export class FileManager {
     data += `${jsonFormat}\n\t]\n}`;
     data = this.noteJsonFormat(data);
     this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
-    console.log(chalk.green("Nota añadida con éxito."));
     return this.getUserNotes(user);
   }
 
@@ -139,22 +140,20 @@ export class FileManager {
    * @returns Array of end notes if the note is removed.
    * Undefined is something goes wrong.
    */
-  public removeNote(user: string, note: Note): Note[] | undefined {
+  public removeNote(user: string, note: string): Note[] | undefined {
     const allNotes: Note[] | undefined = this.getUserNotes(user);
     let data: string = `{\n\t"notes": [\n\t\t`;
     if (typeof allNotes === 'undefined') {
       this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, '');
-      console.log(chalk.red(`Error en el formato del archivo ${user}.json.`));
       return undefined;
     }
     let index: number = -1;
     allNotes.forEach((arrNote) => {
-      if (arrNote.title === note.title) {
+      if (arrNote.title === note) {
         index = allNotes.indexOf(arrNote);
       }
     });
     if (index === -1) {
-      console.log(chalk.red(`No se encuentra la nota en ${user}.json.`));
       return undefined;
     }
     delete allNotes[index];
@@ -166,7 +165,6 @@ export class FileManager {
     data += `\n\t]\n}`;
     data = this.noteJsonFormat(data);
     this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
-    console.log(chalk.green("Nota eliminada con éxito."));
     return this.getUserNotes(user);
   }
 
@@ -179,7 +177,7 @@ export class FileManager {
    * @returns Array of end notes if the note is edited.
    * Undefined is something goes wrong.
    */
-  public editeNote(user: string, oldNote: Note, editedNote: Note):
+  public editNote(user: string, oldNote: string, editedNote: Note):
       Note[] | undefined {
     const allNotes: Note[] | undefined = this.getUserNotes(user);
     let data: string = `{\n\t"notes": [\n\t\t`;
@@ -190,12 +188,11 @@ export class FileManager {
     }
     let index: number = -1;
     allNotes.forEach((arrNote) => {
-      if (arrNote.title === oldNote.title) {
+      if (arrNote.title === oldNote) {
         index = allNotes.indexOf(arrNote);
       }
     });
     if (index === -1) {
-      console.log(chalk.red(`No se encuentra la nota en ${user}.json.`));
       return undefined;
     }
     allNotes[index] = editedNote;
@@ -207,7 +204,6 @@ export class FileManager {
     data += `\n\t]\n}`;
     data = this.noteJsonFormat(data);
     this.fs_.writeFileSync(`${this.folderPath_}/${user}.json`, data);
-    console.log(chalk.green("Nota editada con éxito."));
     return this.getUserNotes(user);
   }
 
@@ -219,7 +215,6 @@ export class FileManager {
    */
   public removeUser(user :string): boolean {
     this.fs_.rmSync(`${this.folderPath_}/${user}.json`);
-    console.log(chalk.green("Usuario eliminado con éxito."));
     return true;
   }
 
