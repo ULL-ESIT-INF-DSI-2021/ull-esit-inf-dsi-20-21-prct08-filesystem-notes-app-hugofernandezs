@@ -1,0 +1,12 @@
+{
+  "nota1": {
+    "title": "Nota1",
+    "color": "Red",
+    "body": "Cuerpo de la nota 1."
+  },
+  "nota2": {
+    "title": "Nota2",
+    "color": "Blue",
+    "body": "Cuerpo de la nota 2."
+  }
+}
